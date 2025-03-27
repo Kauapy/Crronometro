@@ -52,14 +52,17 @@ const Timer = () => {
 
 
   return (
-    <div className="timer">
-      {display}
-      <div className="Botoes">
-        <button className='botao' onClick={iniciarCronometro}>Play</button>
-        <button className='botao' onClick={pararCronometro}>Pause</button>
-        <button className="botao" onClick={resetarCronometro}>Resetar</button>
+      <div className="container">
+        <div className="Botoes">
+          {display}
         </div>
-    </div>
+
+          <div className="naosei">
+            <button className='botao' onClick={iniciarCronometro}>Play</button>
+            <button className='botao' onClick={pararCronometro}>Pause</button>
+            <button className="botao" onClick={resetarCronometro}>Resetar</button>
+          </div>
+      </div>
     
   );
 }
