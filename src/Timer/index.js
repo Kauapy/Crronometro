@@ -3,11 +3,31 @@ import './Timer.css';
 
 const Timer = () => {
   const [totalSegundos, setTotalSegundos] = useState(0);
+  const [intervalo, setIntervalo] = useState(null);
 
+  const iniciarCronometro = () => {
+    if(!intervalo){
+        const novoIntervalo = setInterval(() => {
+            setTotalSegundos((totalSegundos) => totalSegundos + 1);
+        },1000);
+        setIntervalo(novoIntervalo);
+    }
+  }
+
+  const pararCronometro = () =>{
+      if(intervalo){
+          clearInterval(intervalo);
+          setIntervalo(null); 
+      }
+  }
+
+
+  const resetarCronometro = () => {
+    setTotalSegundos(0);
+    clearInterval(intervalo);
+  }
   useEffect(() => {
-    const intervalo = setInterval(() => {
-      setTotalSegundos(prev => prev + 1);
-    }, 1000);
+    
 
     return () => clearInterval(intervalo);
   }, []);
@@ -16,24 +36,31 @@ const Timer = () => {
 
   if (totalSegundos < 60) {
 
-    display = <p>{totalSegundos}s</p>;
+    display = <p className="temporizador">{totalSegundos}s</p>;
   } else if (totalSegundos < 3600) {
 
     const minutos = Math.floor(totalSegundos / 60);
     const segundos = totalSegundos % 60;
-    display = <p>{minutos}m : {segundos}s</p>;
+    display = <p className="temporizador">{minutos}m : {segundos}s</p>;
   } else {
 
     const horas = Math.floor(totalSegundos / 3600);
     const minutos = Math.floor((totalSegundos % 3600) / 60);
     const segundos = totalSegundos % 60;
-    display = <p>{horas}h : {minutos}m : {segundos}s</p>;
+    display = <p className="temporizador">{horas}h : {minutos}m : {segundos}s</p>;
   }
+
 
   return (
     <div className="timer">
       {display}
+      <div className="Botoes">
+        <button className='botao' onClick={iniciarCronometro}>Play</button>
+        <button className='botao' onClick={pararCronometro}>Pause</button>
+        <button className="botao" onClick={resetarCronometro}>Resetar</button>
+        </div>
     </div>
+    
   );
 }
 
